@@ -8,71 +8,62 @@ let border;
 
 let angle = 0;
 
-function updateContainer() {
-  container = select('#sketchContainer');
-  w = parseFloat(getComputedStyle(container.elt).getPropertyValue('width'));
-  h = parseFloat(getComputedStyle(container.elt).getPropertyValue('height'));
+let imgUrl = "temp.jpeg";
+let img;
+let p;  
+
+const PARTICLE_SIZE = 10;
+
+
+// Plan
+// clear template
+// duplicate code to the point of image to dots
+// get the dots waving
+// swap the setup to take text input?
+
+
+function preload() {
+  img = loadImage(imgUrl);
 }
 
-function windowResized() {
-  updateContainer();
-  resizeCanvas(w, h);
-}
+// function updateContainer() {
+//   container = select('#sketchContainer');
+//   w = parseFloat(getComputedStyle(container.elt).getPropertyValue('width'));
+//   h = parseFloat(getComputedStyle(container.elt).getPropertyValue('height'));
+// }
+
+// function windowResized() {
+//   updateContainer();
+//   resizeCanvas(w, h);
+// }
 
 function setup() {
-  updateContainer();
-  canvas = createCanvas(w, h, WEBGL);
+  // updateContainer();
+  createCanvas(windowWidth, windowHeight);
   smooth();
-  canvas.parent("#sketchContainer");
+  // canvas.parent("#sketchContainer");
+  p = new Particle(70, 70, 0);
 }
 
 function draw() {
-  translate(-width / 2, -height / 2);
-
-  background('#fffff8');
-
-  strokeWeight(1);
-  stroke('#222831');
-  fill('#222831');
-
-  stroke('#c7b198');
-  fill('#c7b198');
-  ellipse(mouseX, mouseY, 50, 50);
-
-  // drawings
-  push();
-  stroke('#c7b198');
-  strokeWeight(2);
-  translate(width / 2, height / 2);
-  noFill();
-  rotateY(angle);
-  rotateX(angle);
-  box(100, 100);
-
-  stroke('#321f28');
-  fill('#321f28');
-  // noFill();
-  sphere(25);
-
-  pop();
-
-  // border
-  stroke('#222831');
-  noFill();
-  strokeWeight(5);
-  rectMode("corners");
-  rect(0, 0, width, height);
-  angle += 0.01;
-
-  document.getElementById("fps").innerHTML = frameRate().toFixed(2);
+  background(40);
+  image(img, 0, 0 );
+  p.draw();
 }
 
-function colorAlpha(aColor, alpha) {
-  // allows usage of HEX colors with alpha
-  const c = color(aColor);
-  let a = alpha;
-  if (alpha <= 0.1) {
-    a = 0.1;
+class Particle {
+  constructor(x, y, color) {
+    this.x = x;
+    this.y = y;
+    this.color = color;
   }
-  return color('rgba(${[red(c), green(c), blue(c), a].join(', ')})');
+
+  update() {
+
+  }
+
+  draw() {
+    fill(this.color)
+    ellipse(this.x, this.y, PARTICLE_SIZE);
+  }
 }
