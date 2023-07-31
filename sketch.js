@@ -8,12 +8,12 @@ let border;
 
 let angle = 0;
 
-let imgUrl = "NICK.png";
+let imgUrl = "garb.jpeg";
 let img;
 let particles = [];  
 let initParticles = [];
 
-const PARTICLE_SIZE = 3 //how big the dots are
+const PARTICLE_SIZE = 2.5; //how big the dots are
 const RESOLUTION = 8; //the total space between each particle, higher = less
 
 const noiseScale =0.01/2;
@@ -24,13 +24,14 @@ function preload() {
 }
 
 function setup() {
-  createCanvas(windowWidth, windowHeight);
+  createCanvas(900, 900);
   spawnParticles();
 }
 
 function draw() {
-  background(255);
-  noStroke();
+  background(0);
+  noStroke();//can delete this for more preciion
+
   particles.forEach((particle ) => {
     particle.draw();
     particle.update();
@@ -111,11 +112,14 @@ class Particle {
   update(){
     this.x = this.r*cos(this.angle);
     this.y = this.r*sin(this.angle);
-    this.angle += 0.015;  //speed
+    this.angle += 0.008;  //speed
   }
 
   draw() {
-    fill(this.color);
-    ellipse(this.x0+this.x, this.y0+this.y, PARTICLE_SIZE);
-  }
+    if(this.color[2] != 0){
+    
+      fill(this.color);
+      ellipse(this.x0+this.x, this.y0+this.y, PARTICLE_SIZE);
+    }
+    }
 }
